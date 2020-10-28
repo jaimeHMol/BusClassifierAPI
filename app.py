@@ -27,7 +27,28 @@ def readb64(base64_string):
 
 @app.route("/")
 def index():
+
+    # # Load image from local PC
+    # load image from a input file widget
+
+    # # Load and encode the image to predict
+    # with open(file_to_predict, "rb") as img:
+    #     encoded_string = base64.b64encode(img.read())
+
+    # # Show image loaded
+    # img = readb64(encoded_string)
+    # img_resized = cv2.resize(img, (224,224))
+    # img_np = np.reshape(img_resized, [1, 224, 224, 3])
+
+    # # Call the predict API
+    # pred = model.predict(img_np)
+    # pred_formated = [ "{:.4f}".format(float(prediction*100)) for prediction in pred[0] ]
+
+    # # Show the final prediction
+    # output = {class_name: value for class_name, value in zip(class_names, pred_formated)}
+
     return "Hi, this is the Bus Classifier home!"
+
 
 @app.route("/BusClassifier/api/v1.0/predict", methods=["POST"])
 def create_predict():
@@ -57,6 +78,7 @@ def create_predict():
     # output = str(img_np_serialized)
     output = {class_name: value for class_name, value in zip(class_names, pred_formated)}
     return jsonify({"prediction_vector": output}), 201
+
 
 if __name__ == "__main__":
     app.run(debug=True)
